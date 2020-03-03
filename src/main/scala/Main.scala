@@ -1,7 +1,9 @@
 import java.util
 import java.util.Collections
-
+import scala.util.Random
+import scala.io.Source
 import scala.collection.JavaConverters._
+import scala.collection.mutable.ArrayBuffer
 
 object Main{
   /*
@@ -41,9 +43,7 @@ object Main{
     }
   }
 
-  /*
-   *     Day 2-------------------------Day 2
-   */
+
 def recursionRepeat(str:String, count:Int): Int ={
   if (count > 0){ 0
   } else {
@@ -57,18 +57,63 @@ def patternMatch(input :Any) = input match{
   case input @ Array(_,_) => println(input(1) + "," + input(0))
   case _ => println("failed")
 }
+  def replaceHidden(str:String, char:Set[Char])={
+  var result = str
+  for (s <- result.toCharArray ){
+    if (!char.contains(s)){
+      result = result.replace(s,'_')
+    }
+  }
+  result.toString
+  }
+  def checkUnderScore(str:String) ={
+    str.contains("_")
+  }
+  def getWord()={
+    var strList = List(for (line <- Source.fromFile("wordstxt").getLines) yield line).toList
+    strList(0)
+  }
+
+
+def GetLongestWord(file:String, letters:String)={
+  var letterArray= letters.toSet
+  var Result = ArrayBuffer[String]()
+  for (line <- Source.fromFile(file).getLines) {
+    var str = line.toSet
+    if (str.subsetOf(letterArray)){
+      Result.append(line)
+    }
+  }
+  Result.maxBy(_.length)
+}
 
 
 
 
   def main(args: Array[String]): Unit = {
-    var list = List(1,2)
-    var tuple = Tuple2(2, 6)
-    var array = Array(5,6)
-    patternMatch(list)
-    patternMatch(tuple)
-    patternMatch(array)
-    patternMatch(1)
+    var playing:Boolean = true
+    val hangWord:String = "Penguin".toLowerCase
+    var charArray = Set[Char]()
+    var displayWord:String = replaceHidden(hangWord, charArray)
+    var lives = 10
+    println("your word is:" + hangWord.length + " long")
+    while (playing){
+      println("words already used: " + charArray.toString())
+      println("progress made: " + displayWord)
+      println("you have: " + lives + " lives left")
+      println("next char please: ")
+      charArray = charArray+scala.io.StdIn.readChar()
+      var lastWord = displayWord
+      displayWord = replaceHidden(hangWord, charArray)
+      println(displayWord)
+      if (!checkUnderScore(displayWord)) {
+        println("yay you Won")
+        playing = false
+      }else if(lives < 1){
+        println("yay you Lost")
+        playing = false;
+      }else if (lastWord != displayWord)lives -= 1
+    }
   }
 
 
