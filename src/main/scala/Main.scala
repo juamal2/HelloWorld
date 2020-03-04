@@ -43,20 +43,39 @@ object Main{
     }
   }
 
+  def GetLongestWord(file:String, letters:String)={
+    var letterArray= letters.toSet
+    var Result = ArrayBuffer[String]()
+    for (line <- Source.fromFile(file).getLines) {
+      var str = line.toSet
+      if (str.subsetOf(letterArray)){
+        Result.append(line)
+      }
+    }
+    Result.maxBy(_.length)
+  }
 
-def recursionRepeat(str:String, count:Int): Int ={
+
+  def recursionRepeat(str:String, count:Int): Int ={
   if (count > 0){ 0
   } else {
     recursionRepeat(str, count) - 1
     count
   }
 }
-def patternMatch(input :Any) = input match{
+  def patternMatch(input :Any) = input match{
   case input @ List(_,_) => println(input.reverse)
   case input @ (_,_) => println(input.swap)
   case input @ Array(_,_) => println(input(1) + "," + input(0))
   case _ => println("failed")
 }
+
+
+
+
+
+
+
   def replaceHidden(str:String, char:Set[Char])={
   var result = str
   for (s <- result.toCharArray ){
@@ -70,50 +89,42 @@ def patternMatch(input :Any) = input match{
     str.contains("_")
   }
   def getWord()={
-    var strList = List(for (line <- Source.fromFile("wordstxt").getLines) yield line).toList
-    strList(0)
+    var strList = (for (line <- Source.fromFile("wordstxt").getLines) yield line).toList
+    strList(Random.nextInt(strList.length))
   }
-
-
-def GetLongestWord(file:String, letters:String)={
-  var letterArray= letters.toSet
-  var Result = ArrayBuffer[String]()
-  for (line <- Source.fromFile(file).getLines) {
-    var str = line.toSet
-    if (str.subsetOf(letterArray)){
-      Result.append(line)
-    }
-  }
-  Result.maxBy(_.length)
-}
-
-
-
-
-  def main(args: Array[String]): Unit = {
+  def hangman() ={
     var playing:Boolean = true
-    val hangWord:String = "Penguin".toLowerCase
+    val hangWord:String = getWord().toLowerCase
     var charArray = Set[Char]()
     var displayWord:String = replaceHidden(hangWord, charArray)
     var lives = 10
     println("your word is:" + hangWord.length + " long")
     while (playing){
-      println("words already used: " + charArray.toString())
+      println ("words already used: " + charArray.toString())
       println("progress made: " + displayWord)
       println("you have: " + lives + " lives left")
       println("next char please: ")
+      var lastWord = charArray
       charArray = charArray+scala.io.StdIn.readChar()
-      var lastWord = displayWord
       displayWord = replaceHidden(hangWord, charArray)
       println(displayWord)
       if (!checkUnderScore(displayWord)) {
         println("yay you Won")
+        println("your word was:" + hangWord )
         playing = false
       }else if(lives < 1){
         println("yay you Lost")
+        println("your word was:" + hangWord )
         playing = false;
-      }else if (lastWord != displayWord)lives -= 1
+      }else if (lastWord != charArray)lives -= 1
     }
+  }
+
+
+
+
+  def main(args: Array[String]): Unit = {
+
   }
 
 
