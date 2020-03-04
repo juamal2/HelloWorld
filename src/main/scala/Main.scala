@@ -1,10 +1,9 @@
-import java.util
-import java.util.Collections
-import scala.util.Random
-import scala.io.Source
-import scala.collection.JavaConverters._
-import scala.collection.mutable.ArrayBuffer
 
+import Battleships.com.BattleBoard
+
+import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
+import scala.util.Random
 object Main{
   /*
    *    Day 1-------------------------Day 1
@@ -124,7 +123,9 @@ object Main{
 
 
   def main(args: Array[String]): Unit = {
-
+    var currentBoard = new BattleBoard
+    currentBoard.fill()
+    currentBoard.display()
   }
 
 
