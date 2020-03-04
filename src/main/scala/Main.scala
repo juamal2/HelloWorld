@@ -1,6 +1,4 @@
 
-import Battleships.com.BattleBoard
-
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 import scala.util.Random
@@ -123,9 +121,8 @@ object Main{
 
 
   def main(args: Array[String]): Unit = {
-    var currentBoard = new BattleBoard
-    currentBoard.fill()
-    currentBoard.display()
+
+
   }
 
 
