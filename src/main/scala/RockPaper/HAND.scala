@@ -6,7 +6,7 @@ object HAND extends Enumeration {
   val PAPER = ("paper")
   val LIZARD = ("lizard")
   val SPOCK = ("spock")
-  val ALLHANDS = s"$ROCK,$SCISSORS,$PAPER,$LIZARD,$SPOCK"
+  val ALLHANDS = s"$ROCK, $SCISSORS, $PAPER, $LIZARD, $SPOCK"
 
 
   override def toString(): String = ALLHANDS
