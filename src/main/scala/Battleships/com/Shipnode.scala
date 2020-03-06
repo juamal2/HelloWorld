@@ -1,7 +1,7 @@
 package Battleships.com
 
 class Shipnode {
-  var innerText = "X"
+  var innerText = "O"
   var isHit = false
   var isShip = false
 }

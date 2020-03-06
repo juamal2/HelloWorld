@@ -1,4 +1,6 @@
 
+import RockPaper.RockPaper
+
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 import scala.util.Random
@@ -117,10 +119,13 @@ object Main{
     }
   }
 
-
-
+def uniqueSum(num1: Int, num2: Int, num3: Int): Unit ={
+  val nums = Set[Int]()
+}
 
   def main(args: Array[String]): Unit = {
+        val game = new RockPaper()
+        game.playGamePlayer()
 
 
   }
